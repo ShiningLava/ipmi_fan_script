@@ -9,8 +9,14 @@ The $CPUTEMP var is determined by using ipmitool to query the local iDRAC/IPMI i
 Install ipmitool
 `apt-get install ipmitool -y`
 
+Install nvidia-smi
+`apt-get install nvidia-smi -y`
+
 
 ## Setup
+1. Clone the repository
+   `git clone https://github.com/ShiningLava/ipmi_fan_script.git`
+
 Within `fanscript.sh`:
 1. Edit the thresholds for CPU and GPU temperatures to set your own temperature curve.
 2. Find the IPMI fan identifiers for your fans so that you can target specific fans with the script. I will include guidance for this in the future.
@@ -37,6 +43,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 # *  *  *  *  * user-name  command to be executed
 
 # Need these to run on 30-sec boundaries, keep commands in sync.
+# Change ./fanscript.sh to the location of the script. Probably ~/ipmi_fan_script/fanscript.sh
 * * * * * ./fanscript.sh
 * * * * * sleep 15; ./fanscript.sh
 * * * * * sleep 30; ./fanscript.sh
@@ -47,3 +54,6 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 0 0 1 * * rm fanscript.sh.log
 ```
 3. Save and Close
+
+Fan script should now be running at your desired time interval. To monitor the script, enter the following command:
+`tail -f ~/ipmi_fan_script/fanscript.sh.log`
